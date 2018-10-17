@@ -12,6 +12,15 @@ mongoose.connect('mongodb://localhost/voteDb')
 
 app.use(express.json());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "PATCH, POST, GET, PUT, DELETE, OPTIONS");
+  if ('OPTIONS' === req.method) { return res.send(200); }
+  next();
+});
+
 const user = require('./server/routes/user');
 app.use('/api/user', user);
 
@@ -20,6 +29,9 @@ app.use('/api/subject', subject);
 
 const vote = require('./server/routes/vote');
 app.use('/api/vote', vote);
+
+const admin = require('./server/routes/admin');
+app.use('/api/admin', admin);
 
 
 const port = process.env.PORT || 3000;

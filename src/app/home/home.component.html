@@ -1,3 +1,31 @@
-<p>
-  home works!
-</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-md-center">
+  <div class="d-md-flex d-block flex-row mx-md-auto mx-0">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/profil']" routerLinkActive="router-link-active">My profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/profil#myform" routerLinkActive="router-link-active">Add a subject</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="dec()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<div *ngFor="let subject of subjects; let i = index" id={{i}}>
+  <div class="card">
+    <div class="card-body">
+      <a [routerLink]="['/subject', subject._id]" routerLinkActive="router-link-active">
+        <h5 id="checked" class="card-title">
+          {{subject.title}}
+        </h5>
+      </a>
+    </div>
+  </div>
+</div>

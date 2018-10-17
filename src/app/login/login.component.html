@@ -1,3 +1,40 @@
-<p>
-  login works!
-</p>
+<div id="login">
+  <div id="LoginForm">
+    <div class="container">
+      <div class="login-form">
+        <div class="panel">
+          <h1>Login</h1>
+        </div>
+        <div class="main-div">
+          <form [formGroup]="loginForm">
+            <div class="example-container">
+              <mat-form-field>
+                <input matInput placeholder="Enter your email" formControlName="email" required>
+                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="password" placeholder="Enter your password" formControlName="password">
+              </mat-form-field>
+            </div>
+
+            <br>
+
+            <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+            <!--{{loginForm.value | json}}-->
+          </form>
+          <div>
+
+            <br />
+
+            <div *ngIf="message" class="alert alert-danger" role="alert">
+              {{message}}
+            </div>
+
+            <br />
+            <p>Not yet member ? <a [routerLink]="['/register']">Sign up</a> </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

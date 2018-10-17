@@ -1,4 +1,6 @@
 const { User, validate } = require('../models/user');
+const { Subject } = require('../models/subject');
+const { Vote } = require('../models/vote');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const express = require('express');
@@ -10,6 +12,17 @@ router.get('/', async (req, res) => {
   res.send(users);
 });
 
+router.get('/:idUser', async (req, res) => {
+  const user = await User.findById(req.params.idUser)
+    .populate({
+      path: 'subjects',
+      populate: { path: 'votes', select: 'text' }
+    })
+
+    .exec()
+  res.send(user);
+});
+
 router.post('/register', async (req, res) => {
 
   // let user = new User({ firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, password: req.body.password });
@@ -18,40 +31,22 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  const user = await User.findOne({email:req.body.email});
-  if(!user){res.send({message:'user not found'})}
-  if(!user.comparePassword(req.body.password)){res.send({message:'bad password'})}
-  res.send({message:'ok', userToken : jwt.sign({data:user},'my_seeecreeeettt')});
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) { res.send({ message: 'user not found' }) }
+  if (!user.comparePassword(req.body.password)) { res.send({ message: 'bad password' }) }
+  res.send({ message: 'ok', userToken: jwt.sign({ data: user }, 'my_seeecreeeettt') });
 });
 
-function isEmail(myVar) {
-  var regEmail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
-  return regEmail.test(myVar);
-}
+router.delete('/:idUser/:idSubject', async (req, res) => {
 
-function isPassword(psw) {
-  var validityPassword = "";
-  //verify password
-  if (psw.length < 8) {
-    validityPassword = "Not Valid";
-    //return false;
-  } else {
+  const sub = await User.update({ _id: req.params.idUser }, { $pullAll: { subjects: [req.params.idSubject] } })
+  const subj = await Subject.findByIdAndRemove(req.params.idSubject);
+  const vote = await Vote.deleteMany({subject: req.params.idSubject});
 
-    validityPassword = "bad";
+  res.send(sub, subj, vote);
+  //if (!sub) { res.send({ message: 'subject not deleted' }) }
+  //res.send({ message: 'ok'});
+});
 
-    rea = /[a-z]/;
-    reA = /[A-Z]/;
-    if (rea.test(psw) && reA.test(psw)) {
-      validityPassword = "normal";
-    }
-
-    re0 = /[0-9]/;
-    rec = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/;
-    if (re0.test(psw) && rec.test(psw)) {
-      validityPassword = "good !";
-    }
-  }
-  return validityPassword;
-}
 
 module.exports = router;

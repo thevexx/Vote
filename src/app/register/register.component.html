@@ -1,3 +1,52 @@
-<p>
-  register works!
-</p>
+<div id="LoginForm">
+  <div class="container">
+    <div class="login-form">
+      <div class="main-div">
+        <div class="panel">
+          <h2>Sign up</h2>
+          <p>Please enter your email and password</p>
+        </div>
+
+        <form [formGroup]="registerForm">
+
+          <div class="form-group">
+
+            <input type="text" class="form-control" id="inputPseudo" formControlName="firstName" placeholder="FisrtName">
+
+          </div>
+
+          <div class="form-group">
+
+            <input type="text" class="form-control" formControlName="lastName" placeholder="LastName">
+
+          </div>
+
+          <div class="form-group">
+
+            <input type="email" class="form-control" formControlName="email" id="inputEmail" placeholder="Email Address">
+
+          </div>
+
+          <div class="form-group">
+
+            <input type="password" class="form-control" id="inputPassword" formControlName="password" placeholder="Password">
+
+          </div>
+
+          <button type="submit" class="btn btn-primary" (click)="register()">Register</button>
+
+
+          <div *ngIf="message2" class="alert alert-danger" role="alert">
+            {{message2}}
+          </div>
+
+          <div><br />
+            <p>Already member ? <a [routerLink]="['/login']">Sign in</a> </p>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

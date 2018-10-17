@@ -9,12 +9,12 @@ import { ProfilComponent } from './profil/profil.component';
 
 
 const routes: Routes = [
-  { path: 'subject', component: SubjectComponent },
+  { path: 'subject/:id', component: SubjectComponent },
   { path: 'profil', component: ProfilComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '**', redirectTo: 'home' },
+  { path: '**', redirectTo: 'home' }
 
 ];
 
