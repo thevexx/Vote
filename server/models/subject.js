@@ -14,7 +14,6 @@ const subjectSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Vote'
   }]
-
 });
 
 subjectSchema.pre('remove', async function (next) {

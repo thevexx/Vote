@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
+  closeResult: string;
 
   subjectForm: FormGroup;
   message = '';
@@ -19,9 +20,15 @@ export class ProfilComponent implements OnInit {
   public userSubjects: Array<object> = [];
   id = '';
 
-  public info: Array<object> = [{ 'nvpo': 0, 'nvt': 0 }];
-  nbVoteOptions: Array<any> = [];
-  nbVotesTotal = 1;
+  public rate: any;
+  public rates: Array<any> = [];
+  public ratesTot: Array<any> = [];
+
+  public info: Array<any> = [];
+  public infoTab: any;
+  public nbVoteOptions = [];
+  public nbVotesTotal = 0;
+
   nboption = 0;
 
   constructor(private router: Router, private apiservice: ApiServiceService,
@@ -52,36 +59,47 @@ export class ProfilComponent implements OnInit {
     // console.log(test);
   }
 
-
   getUserSubjects(idUser) {
-    this.info = [{ 'nvpo': 0, 'nvt': 0 }];
     this.apiservice.getUserSubjectsApi(idUser).subscribe((data: any) => {
+
       this.user = data;
       this.userSubjects = data.subjects;
+      // console.log(this.userSubjects);
+
       for (const subj of data.subjects) {
+        this.rates = [];
         this.nbVoteOptions = [];
         this.nbVotesTotal = subj.votes.length;
-        if (this.nbVotesTotal === 0) {
-          this.info.push({ 'nvpo': 0, 'nvt': 0 });
-        } else {
-          for (const option of subj.options) {
-            this.nboption = 0;
-            for (const vote of subj.votes) {
-              if (option === vote.text) {
-                // console.log(option, vote.text);
-                this.nboption = this.nboption + 1;
-              }
+
+        for (const option of subj.options) {
+          this.nboption = 0;
+          for (const vote of subj.votes) {
+            if (option === vote.text) {
+              this.nboption = this.nboption + 1;
             }
-            this.nbVoteOptions.push(this.nboption);
           }
-          console.log(this.nbVoteOptions, this.nbVotesTotal);
-          this.info.push({ 'nvpo': this.nbVoteOptions, 'nvt': this.nbVotesTotal });
+          this.nbVoteOptions.push(this.nboption);
+          if (this.nbVotesTotal !== 0) {
+            this.rate = this.nboption / this.nbVotesTotal * 100;
+          } else {
+            this.rate = 0;
+          }
+          this.rates.push(this.rate);
         }
+        // console.log(this.rates);
+        this.info.push({ 'nvpo': this.nbVoteOptions, 'nvt': this.nbVotesTotal });
+        // console.log(this.nbVoteOptions);
+        this.ratesTot.push({ 'rate': this.rates });
       }
+      // console.log(this.ratesTot);
+      // console.log(this.info);
+
     });
+
   }
 
   addSubject() {
+
     // console.log(this.subjectForm.value);
     if (this.subjectForm.valid) {
       this.message = '';
@@ -109,32 +127,24 @@ export class ProfilComponent implements OnInit {
         // console.log(res);
         this.router.navigateByUrl('/profil');
       });
+      // console.log(subject);
       return this.userSubjects.push(subject);
     }
   }
 
-
   deleteSubject(idU, idS) {
-    this.apiservice.deleteSubjectFromUserApi(idU, idS).subscribe( async (res: any) => {
+    this.apiservice.deleteSubjectFromUserApi(idU, idS).subscribe(async (res: any) => {
       // this.delete(idS);
-
-
       // await this.apiservice.deleteVotesApi(idU, idS);
-
-
     });
     // this.apiservice.reloadApi().subscribe((result: any) => {});
-
-
   }
 
   delete(id) {
-     this.apiservice.deleteSubjectApi(id).subscribe( async (res: any) => {
-       console.log('result', res);
-     });
-
+    this.apiservice.deleteSubjectApi(id).subscribe(async (res: any) => {
+      console.log('result', res);
+    });
   }
-
 
   dec(): void {
     this.cookieService.delete('token');

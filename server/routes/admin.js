@@ -11,12 +11,12 @@ router.get('/listUsers', async (req, res) => {
   res.send(users);
 });
 router.get('/listSubjects', async (req, res) => {
-  const subjects = await Subject.find();
+  const subjects = await Subject.find().populate({ path: 'user' }).exec()
   res.send(subjects);
 });
 
 router.delete('/user/:idUser', async (req, res) => {
-  const subs = await Subject.find({ user: req.params.idUser });
+  const subs = await Subject.find({ user: req.params.idUser }).populate({ path: 'user' }).exec();
   for (let i = 0; i < subs.length; i++) {
     const vote = await Vote.deleteMany({ subject: subs[i]._id });
   }
@@ -25,9 +25,10 @@ router.delete('/user/:idUser', async (req, res) => {
   res.send({ 'message': 'ok' });
 });
 
-router.delete('/subject/:idSubject', async (req, res) => {
 
-    const vote = await Vote.deleteMany({ subject: req.params.idSubject });
+
+router.delete('/subject/:idSubject', async (req, res) => {
+    const vote = await Vote.deleteMany({ subject: req.params.idSubject }).populate({ path: 'user' }).exec();
     const subject = await Subject.findByIdAndRemove(req.params.idSubject);
     const user = await User.update({ subjects: req.params.idSubject }, { $pullAll: { subjects: [req.params.idSubject] } })
 

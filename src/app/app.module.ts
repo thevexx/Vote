@@ -18,7 +18,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { CookieService } from 'ngx-cookie-service';
-import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
+
+import { AdminComponent } from './admin/admin.component';
+import { HeaderComponent } from './dashadmin/header/header.component';
+import { FooterComponent } from './dashadmin/footer/footer.component';
+import { SettingsComponent } from './dashadmin/settings/settings.component';
+import { MenuComponent } from './dashadmin/menu/menu.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +34,11 @@ import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.compo
     HomeComponent,
     SubjectComponent,
     ProfilComponent,
-    DashboardAdminComponent,
+    AdminComponent,
+    HeaderComponent,
+    FooterComponent,
+    SettingsComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,

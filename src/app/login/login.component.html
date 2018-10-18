@@ -2,9 +2,7 @@
   <div id="LoginForm">
     <div class="container">
       <div class="login-form">
-        <div class="panel">
-          <h1>Login</h1>
-        </div>
+        <h1>Login</h1>
         <div class="main-div">
           <form [formGroup]="loginForm">
             <div class="example-container">
@@ -13,18 +11,17 @@
                 <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
               </mat-form-field>
               <mat-form-field>
-                <input matInput type="password" placeholder="Enter your password" formControlName="password">
+                <input id="pass" matInput type="password" placeholder="Enter your password" formControlName="password">
               </mat-form-field>
             </div>
 
-            <br>
+            <br><br>
 
             <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
             <!--{{loginForm.value | json}}-->
           </form>
           <div>
 
-            <br />
 
             <div *ngIf="message" class="alert alert-danger" role="alert">
               {{message}}

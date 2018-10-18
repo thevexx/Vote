@@ -25,6 +25,9 @@ export class SubjectComponent implements OnInit {
   nboption = 0;
   voteUser: Array<any> = [];
 
+  public rate: any;
+  public rates: Array<any> = [];
+
   optionText = '';
 
   testVoteExist = false;
@@ -65,7 +68,16 @@ export class SubjectComponent implements OnInit {
           }
         }
         this.nbVoteOptions.push(this.nboption);
+        if (this.nbVotesTotal !== 0) {
+          this.rate = this.nboption / this.nbVotesTotal * 100;
+        } else {
+          this.rate = 0;
+        }
+        this.rates.push(this.rate);
+
       }
+      // console.log(this.nbVoteOptions);
+       console.log(this.rates);
     });
   }
 
@@ -73,12 +85,12 @@ export class SubjectComponent implements OnInit {
   vote() {
 
     if (this.idUserInSubject === this.idUser) {
-      setTimeout(function() { alert('How dare you !!!! \rYou can NOT vote your own subject! come on !!'); }, 3000);
+      alert('How dare you !!!! \rYou can NOT vote your own subject!!');
     } else {
       this.apiservice.getExistVote(this.idUser, this.idSub).subscribe((v: any) => {
         // console.log(v.exist);
         if (v.exist) {
-          setTimeout(function() { alert('You have already voted for: " ' + v.text + ' "'); }, 3000);
+          alert('You have already voted for: " ' + v.text + ' "');
           return this.router.navigateByUrl('/home');
         } else {
           const radios = document.getElementsByName('vote');
@@ -99,10 +111,10 @@ export class SubjectComponent implements OnInit {
                 date: tod
               };
 
-              console.log(vote);
+              // console.log(vote);
               this.apiservice.postVoteApi(this.idUser, this.idSub, vote).subscribe((data: any) => {
                 // console.log(data);
-                setTimeout(function() { alert('Thank you for voting ! :) :)'); }, 3000);
+                alert('Thank you for voting ! :) :)');
                 this.router.navigateByUrl('/home');
                 return this.votes.push(data);
               });

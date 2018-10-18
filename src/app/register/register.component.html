@@ -1,52 +1,39 @@
-<div id="LoginForm">
-  <div class="container">
-    <div class="login-form">
-      <div class="main-div">
-        <div class="panel">
-          <h2>Sign up</h2>
-          <p>Please enter your email and password</p>
+<div id="login">
+  <div id="LoginForm">
+    <div class="container">
+      <div class="login-form">
+        <h1>Sign up</h1>
+        <div class="main-div">
+          <form [formGroup]="registerForm">
+            <div class="example-container">
+              <mat-form-field>
+                <input matInput placeholder="Enter your firstname" formControlName="firstName" required>
+                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Enter your lastname" formControlName="lastName" required>
+                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Enter your email" formControlName="email" required>
+                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+              </mat-form-field>
+              <mat-form-field>
+                <input id="pass" matInput type="password" placeholder="Enter your password" formControlName="password">
+              </mat-form-field>
+            </div>
+
+            <br>
+
+            <button type="submit" class="btn btn-primary" (click)="register()">Login</button>
+            <br><br>
+            <p>Already member ? <a [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign in</a></p>
+            <!--{{loginForm.value | json}}-->
+          </form>
         </div>
 
-        <form [formGroup]="registerForm">
-
-          <div class="form-group">
-
-            <input type="text" class="form-control" id="inputPseudo" formControlName="firstName" placeholder="FisrtName">
-
-          </div>
-
-          <div class="form-group">
-
-            <input type="text" class="form-control" formControlName="lastName" placeholder="LastName">
-
-          </div>
-
-          <div class="form-group">
-
-            <input type="email" class="form-control" formControlName="email" id="inputEmail" placeholder="Email Address">
-
-          </div>
-
-          <div class="form-group">
-
-            <input type="password" class="form-control" id="inputPassword" formControlName="password" placeholder="Password">
-
-          </div>
-
-          <button type="submit" class="btn btn-primary" (click)="register()">Register</button>
-
-
-          <div *ngIf="message2" class="alert alert-danger" role="alert">
-            {{message2}}
-          </div>
-
-          <div><br />
-            <p>Already member ? <a [routerLink]="['/login']">Sign in</a> </p>
-          </div>
-
-        </form>
       </div>
-
     </div>
   </div>
+
 </div>

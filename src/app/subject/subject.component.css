@@ -1,0 +1,12 @@
+.btn{
+  margin: 5px;
+  color: #fff;
+  background-color: #343a40 !important;
+}
+
+
+.modal.fade.in {
+  top: 10%;
+  left: auto !important;
+  right: 0% !important;
+}

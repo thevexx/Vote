@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
 
 
   getSubjects() {
-    console.log(this.id);
+    // console.log(this.id);
     this.apiservice.getSubjectsApi().subscribe((data: Array<object>) => {
       this.subjects = data;
       // console.log(this.subjects);

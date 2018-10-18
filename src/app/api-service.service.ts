@@ -25,6 +25,7 @@ export class ApiServiceService {
     return this.http.get('http://localhost:3000/api/subject/' + idSub);
   }
 
+
   getUserSubjectsApi(idUser) {
     return this.http.get('http://localhost:3000/api/user/' + idUser);
   }
@@ -49,6 +50,19 @@ export class ApiServiceService {
   }
   reloadApi() {
     return this.http.get('http://localhost:3000/api/user/');
+  }
+  getUsersApiAdmin() {
+    return this.http.get('http://localhost:3000/api/admin/listUsers/');
+  }
+  getSubjectsApiAdmin() {
+    return this.http.get('http://localhost:3000/api/admin/listSubjects/');
+  }
+  deleteUsersApiAdmin(id) {
+    return this.http.delete('http://localhost:3000/api/admin/user/' + id);
+  }
+
+  deleteSubjectsApiAdmin(id) {
+    return this.http.delete('http://localhost:3000/api/admin/subject/' + id);
   }
 
 }

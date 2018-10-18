@@ -1,31 +1,66 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-md-center">
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark justify-content-md-center">
   <div class="d-md-flex d-block flex-row mx-md-auto mx-0">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link text-white font-weight-bold" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/profil']" routerLinkActive="router-link-active">My profile</a>
+        <a class="nav-link  text-white font-weight-bold" [routerLink]="['/profil']" routerLinkActive="router-link-active">My
+          profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/profil#myform" routerLinkActive="router-link-active">Add a subject</a>
+        <a class="nav-link  text-white font-weight-bold" href="/profil#myform" routerLinkActive="router-link-active">Add
+          a subject</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="dec()">Logout</a>
+        <a class="nav-link  text-white font-weight-bold" (click)="dec()">Logout</a>
       </li>
     </ul>
   </div>
 </nav>
 
 
-<div *ngFor="let subject of subjects; let i = index" id={{i}}>
-  <div class="card">
-    <div class="card-body">
-      <a [routerLink]="['/subject', subject._id]" routerLinkActive="router-link-active">
-        <h5 id="checked" class="card-title">
-          {{subject.title}}
-        </h5>
-      </a>
+
+<main role="main">
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-4" *ngFor="let subject of subjects; let i = index" id={{i}}>
+          <div class="card mb-4 box-shadow">
+            <div class="card-body">
+              <p id="checked" class="card-text font-weight-bold"> {{subject.title}}</p>
+              <p class="card-text">{{subject.description}}</p>
+              <p>(Created by : <span class="font-weight-bold">{{subject.user.firstName}})</span></p>
+              <p>Number of Votes: {{subject.votes.length}}</p>
+              <div class=" justify-content-between align-items-center">
+                <div class="text-center">
+                  <button [routerLink]="['/subject', subject._id]" type="button" class="btn btn-sm btn-dark">View Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</main>

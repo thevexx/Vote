@@ -1,17 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-md-center">
+<head>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark justify-content-md-center">
   <div class="d-md-flex d-block flex-row mx-md-auto mx-0">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/home']" routerLinkActive="router-link-active">Home </a>
-      </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">My profile<span class="sr-only">(current)</span></a>
+        <a class="nav-link text-white font-weight-bold" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a href="/profil#myform" class="nav-link">Add a subject</a>
+        <a class="nav-link  text-white font-weight-bold" [routerLink]="['/profil']" routerLinkActive="router-link-active">My
+          profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="dec()">Logout</a>
+        <a class="nav-link  text-white font-weight-bold" href="/profil#myform" routerLinkActive="router-link-active">Add
+          a subject</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link  text-white font-weight-bold" (click)="dec()">Logout</a>
       </li>
     </ul>
   </div>
@@ -20,37 +43,35 @@
 
 <div class="container">
   <div class="row">
-
     <div class="col-4" *ngFor="let subject of userSubjects; let i = index">
       <div class="card ">
         <div class="card-body">
           <h4 class="card-title">{{subject.title}}</h4>
           <p class="card-text">{{subject.description}}</p>
           <div *ngFor="let option of subject.options; let j = index">
-            <div *ngIf="option">
-              <strong>{{option}}</strong>
-              <span class="pull-right">
-                {{(info[i].nvpo[j]/info[i].nvt*100).toFixed(0)}} %
-              </span>
-              <div class="progress progress-striped active">
-                <div class="bar" [style.width.%]="(info[i].nvpo[j]/info[i].nvt*100).toFixed(0)"></div>
-              </div>
+            <strong>{{option}}</strong>
+
+            <span class="pull-right">
+              {{(ratesTot[i].rate[j]).toFixed(0)}} % ({{info[i].nvpo[j]}} Votes)
+            </span>
+
+            <div class="progress progress-striped active">
+              <div class="bar" [style.width.%]="(info[i].nvpo[j]/info[i].nvt*100).toFixed(0)"></div>
             </div>
+
           </div>
           <br>
           <p>Total of votes = {{info[i].nvt}}</p>
 
           <br><br>
           <div class="text-center">
-            <button type="submit" class="btn btn-danger" (click)="deleteSubject(id, subject._id)">Delete</button>
+            <button type="submit" class=" btn btn-danger" (click)="deleteSubject(id, subject._id)" onclick="window.location.href = 'http://localhost:4200/profil'">Delete</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
 
 <br><br><br><br>
 <div id="myform">
@@ -62,39 +83,56 @@
           <div class="form">
             <form [formGroup]="subjectForm">
               <div class="example-container">
+
                 <mat-form-field>
                   <input matInput placeholder="Enter a title" formControlName="title" required>
                 </mat-form-field>
                 <textarea placeholder="Your Description (optional)" formControlName="description" type="text" class="txt_3"></textarea>
-                <mat-form-field>
-                  <input matInput type="text" placeholder="Option" formControlName="option1" required>
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput type="text" placeholder="Option" formControlName="option2" required>
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput type="text" placeholder="Option" formControlName="option3">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput type="text" placeholder="Option" formControlName="option4">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput type="text" placeholder="Option" formControlName="option5">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput type="text" placeholder="Option" formControlName="option6">
-                </mat-form-field>
 
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field>
+                      <input matInput type="text" placeholder="Option" formControlName="option1" required>
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field>
+                      <input matInput type="text" placeholder="Option" formControlName="option2" required>
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field>
+                      <input matInput type="text" placeholder="Option" formControlName="option3">
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field>
+                      <input matInput type="text" placeholder="Option" formControlName="option4">
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field>
+                      <input matInput type="text" placeholder="Option" formControlName="option5">
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field>
+                      <input matInput type="text" placeholder="Option" formControlName="option6">
+                    </mat-form-field>
+                  </div>
+                </div>
               </div>
               <br>
-              <button type="submit" class="btn btn-primary" (click)="addSubject()">Add Subject</button>
+              <button type="submit" class="butt btn btn-dark" (click)="addSubject()" onclick="window.location.href = 'http://localhost:4200/profil'">Add
+                Subject</button>
               <!--{{loginForm.value | json}}-->
             </form>
-
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
